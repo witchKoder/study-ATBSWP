@@ -38,7 +38,6 @@ Notice pathlib and os modules are now being deployed, because pathlib is unable 
 All users have their unique user folders that contain all their files. This unique folder is called the home directory, and appears as C:\USERS\name
 To quickly obtain the home directory, use the Path.home() to access the home directory.
 
-
 # Specifying Absolute & Relevant Paths
 There are two ways to specify a path
 1. Absolute path
@@ -49,5 +48,47 @@ history: In 1960s, computers had two floppy discs labeled A and B. On windows, d
 
 ## Handling Absolute & Relevant Paths
 Calling the is_absolute()) method on a path object will return True, if the path object reflects an absolute path. Otherwise, the evaluation will return False.
+Example:
+Path.cwd().is_absolute() returns True.
+Path('comics\\villians\\catwoman').is_absolute() returns False
+To turn a relevant path into a absolute path, put the Path.cwd() function before the path object. Similarly, the absolute() method shortens the process and returns the absolute path of a relevant path.
+The Path.home() will accomplish the same as Path.cwd().
 
+# Creating new folders
+Your programs can create folders by using the os module and calling the makedirs() function.
+Example:
+os.makedirs('C:\\USERS\Nicky\\comics//villians//catwoman')
+Note that this will create the necessary folders in order to reach the catwoman directory.
+
+To make a folder from an existing path object, call the mkdir() method on such object. This method is unable to make any necessary folders leading up to it, so make sure the folders exist before hand. However, you can force the mkdir method to make parent folders by passing the argument, parents=True. This will create all necessary folderes to reach the last folder specified.
+
+# Getting parts of the file path
+Given a path object, you can use attributes to return string values of the various parts of the path. This is especially useful if you are creating new file paths with already existing folders.
+The parts of a file path include:
+* The Anchor
+The root folder 'C:\\'
+* The Drive
+The single letter that represents the physical hardrive/ storage. 'C:'
+* The Parent
+The parent attribute is the folder containing the file
+* the Stem
+The stem is the name of the file
+* The suffix
+The suffix is the extension of the fileMost of the attributes return string values, except for the parent attribute. The parent attribute returns another path object. You can also return a tuple containing all the different string values using the parts attribute.
+
+Furthermore, there is another attribute called parents. The parents attribute will return a path object's ancestor folders by passing in an  index.
+Example:
+path = WindowsPath('C:\\USERS\\Nicky\\Music\\Projects')
+path.parents[0] returns WindowsPath('C:\\USERS\Shann\\Music')
+path.parents[1] returns WindowsPath('C:\USERS\\Nicky')
+
+## Finding File Sizes and Time Stamps
+The stat() method returns a stat_result object containing file size and time stamp information about a file.
+there several important attributes to the stat_result.
+* st_size
+This is returned as bytes, so to convert it to kb, mb, or gb, do some sort of division by 1024. path.stat().st_size / 1024 ** 2 returns gb
+* st_mtime
+returns the last modified date, and requires time module to humanly read it.
+* st_ctime
+provides the date at which the file was created, and requires time module to humanly read it. time.asctime(time.localtime(path.stat().st_ctime))
 
