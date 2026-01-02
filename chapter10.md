@@ -92,3 +92,77 @@ returns the last modified date, and requires time module to humanly read it.
 * st_ctime
 provides the date at which the file was created, and requires time module to humanly read it. time.asctime(time.localtime(path.stat().st_ctime))
 
+## Finding Files Using Glob Patterns
+Glob patterns are essentially a simplified regex language. In fact, the asterisk and question mark achieve the exact same goal in normal regex. That is, the asterisk is greedy, and the question mark is not greedy.
+The characters
+1. * (asterisk)
+Copies all characters
+2. ? (question mark)
+Copies only one character
+can be used to match both folders and files in glob patterns.
+Path objects that are folders has a glob() method. Once the glob method is called, the method will provide a listing of elements that follow the glob pattern's argument - returning a generator object. You can pass the generator object to the list constructor.
+Example:
+Assume that my_path lies in the video folder,
+my_path.glob('*') will return every file as a generator object
+You can call list or a for loop to extract the contents,
+for name in Path()'C:\\USERS\\Shann\\Music'):
+
+Some use cases, for instance, include renaming or backing up folders and files. Also, the glob patterns are most commonly used with the cli with commands like ls and dir.
+
+# Checking the Validity of a Path
+In order to not recieve an error because a folder or file does not exist, you must call the build-in method exists() on the path object. The exists() method returns True or False 
+You can check if the file exists with the is_file() method checks if the path object is a true file.
+Calling is_dir() method on a path object checks if the path object is a true folder.
+
+# The Reading and Writing Process
+In this next section, the functions covered only handle plain text extensions. A plain text file only includes plain text, and do not include font, size, or color. For instance, .txt and .py are considered plain text extensions. Essentially, you can open up the file in a text editor and the program can read the file and treat it as a string value.
+
+All other files are binary type. This includes img, docx, pdfs, spreadsheets and executables.
+Upon opening the file in the text editor, a random sequence of scrambled characters will appear. Unfortunately, all binary files must be approached differently. Although modules stream line this process for us. One such being the shelve module.
+
+An uncommon way of reading and writing to files is to use the pathlib's methods, read_text() method and write_text() method.
+The read_text() method rreturns the contents of the path object's file to a string value.
+The write_text() method on a path object's file creates or over writes an existing file with the string passed into it.
+Note that this uncommon way to read and write to a file is limited to basic interactions with the files and folders.
+
+The more common way is to use the open function. There are three steps to the model of writing/reading to a file.
+1. Call the open() function to return a file object
+2. Call the read() or write() method on the file object.
+3. Call the close() method on the file object. 
+
+## Opening Files
+Call the open() function and pass an argument that is the desired path. It can be either an absolute path or a relevant path. The return value is a file object.
+Example:
+default_open_file = Path(f'{Path.home()} \/ Documents \/ catwoman.txt', encoding='UTF-8') # opens catwoman.txt in utf-8
+In this default open function, the file is in reading plaintext mode. You are unable to write and only allowed to read. Hence the name.
+
+You can pass the file path, mode to interact with the file, and the encoding, as arguments  to the open function
+The three modes are read ('r'), write ('w') and append ('a'). It is best to always assign utf 8 to encoding.
+
+## Reading Files
+Since we have the file object default_open_file, we can now read from the source by calling the read() method on the file object.
+Example:
+default_open_file.read() # returns any text in the file object as a large string value.
+
+Another and easier way to read files is the readlines() method. The long string value returned will now appear as a list. At which point, the string value will become multiple elements in the list if and only if there is a line break. The program automatically adds escape characters to each end of string value, unless the string value is the last element within the data structure.
+
+## Writing to files
+In order to write to files, be sure that the file object has the writing argument passed into the open function. In fact, you can also decide to choose append mode instead of writing mode.
+The writing mode overwrites a file. Meanwhile, the append mode continues to write to an existing file or creates a new file if the file does not already exist.
+Example:
+open_file = Open()'C:\\USERS\\Shann\\Documents\\catwoman.txt', 'a')
+open_file.write('Purr')
+open_file.close()
+
+read_file = open('C:\\USERS\\Shann\\Documents\\catwoman.txt', 'r', encoding='utf-8')
+read_file_contents = read_open_file.read()
+.read_open_file.close()
+print(read_file_contents)
+Note that the append mode does not add an escape character newline upon writing to file and closing the file. You must pass the character in your .write() method string.
+
+
+
+
+
+
+
