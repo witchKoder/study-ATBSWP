@@ -160,9 +160,35 @@ read_file_contents = read_open_file.read()
 print(read_file_contents)
 Note that the append mode does not add an escape character newline upon writing to file and closing the file. You must pass the character in your .write() method string.
 
+# Using with statements
+Every file that is open needs a close method called to the file object in order to close the file. The with statement is a pythonic way to write open and close on a file object.
+The with creates a context manager that manages Python's resources. Some of the resources are files, network connections, or segments of of memory. Most of the time, the resources have setup and teardown steps of which the resource is allocated and released so other programs can use it.
 
+The with statement forms a block of code that begins to allocate the resources, which until the closing of the with statement. The closing of the with statement can appear as a return statement, a file handling error, or an other reason. This is is where resources are released.
+Example:
+with open('C:\\USERS\\Nicky\\Documents\\catwoman.txt', 'w', encoding='UTF-8') as file_object:
 
+# closes once the block is exited.
 
+# Saving variables with the shelve module
+To be able to save variables for the next time you run the script, you can use the shelve module. The variables are stored in binary shelve files. You can add save and open features to a program, for example, config settings. Once the file is loaded up again, the config settings will be restored.
+Example:
+import shelve
+shelve_file_object = shelve.open('C:\\USERS\\Nicky\\Documents\\comics')
+shelve_file_object['villians'] = ['catwoman', 'poison ivy']
+shelve_file_object.close()
+Notice that the shelve file opens and closes exactly like opening and writing files without the shelve module. Pass a path into the argument, though we initialize a list with villians. The shelve treats the variables as a key to a dictionary. Once the code block is executed, three files are created: comics.bak, comics.dat, and comics.dir
 
-
+Unlike normal open to close reading to writing, the shelve module does not need specifying what mode it should be in, as it allows for reading and writing once opened.
+Example:
+shelve_file_object = open('C:\\USERS\\Nicky\\Music\\comics')
+shelve_file_object['villians'] # returns the values of the list
+shelve_file_object.close()
+We use the shelve_file_object['villians'] as a key to find the values, because the shelve_file_object returns a dictionary variable.
+to extract the keys and values, you must pass tthe list constructor.
+Example:
+shelve_file_object  open()'C:\\USERS\\Nicky\\Music\\comics')
+list(shelve_file_object.keys()) # returns []'comics']
+list(shelve_file_object.values()) # returns ['catwoman'', 'poison ivy']
+shelve_file_object.close()
 
